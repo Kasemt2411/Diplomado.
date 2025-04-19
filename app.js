@@ -1,0 +1,34 @@
+ // Importaciones
+const express = require('express');
+const mongoose = require('mongoose');
+const cors = require('cors');
+require('dotenv').config();
+
+// App
+const app = express();
+const port = process.env.PORT || 3000;
+
+// Middlewares
+app.use(cors());
+app.use(express.json());
+const rutasUsuario = require('./routes/usuario.routes');
+app.use('/api/usuarios', rutasUsuario);
+
+// Ruta de prueba
+app.get('/', (req, res) => {
+  res.send('Servidor funcionando correctamente');
+});
+
+// Conexión a MongoDB
+mongoose.connect(process.env.MONGODB_URI)
+  .then(() => {
+    console.log('Conexión a MongoDB exitosa');
+
+    // Iniciar el servidor
+    app.listen(port, () => {
+      console.log(`Servidor escuchando en http://localhost:${port}`);
+    });
+  })
+  .catch((error) => {
+    console.error('Error conectando a MongoDB:', error);
+  });
