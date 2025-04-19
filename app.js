@@ -1,8 +1,12 @@
- // Importaciones
+// Importaciones
 const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
 require('dotenv').config();
+
+// Rutas
+const rutasUsuario = require('./routes/usuario.routes');
+const rutasLogin = require('./routes/login.routes');
 
 // App
 const app = express();
@@ -11,10 +15,12 @@ const port = process.env.PORT || 3000;
 // Middlewares
 app.use(cors());
 app.use(express.json());
-const rutasUsuario = require('./routes/usuario.routes');
-app.use('/api/usuarios', rutasUsuario);
 
-// Ruta de prueba
+// Rutas públicas
+app.use('/api/usuarios', rutasUsuario);
+app.use('/api/login', rutasLogin);
+
+// Ruta raíz
 app.get('/', (req, res) => {
   res.send('Servidor funcionando correctamente');
 });
