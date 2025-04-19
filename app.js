@@ -7,6 +7,7 @@ require('dotenv').config();
 // Rutas
 const rutasUsuario = require('./routes/usuario.routes');
 const rutasLogin = require('./routes/login.routes');
+const rutasReserva = require('./routes/reserva.routes');
 
 // App
 const app = express();
@@ -16,9 +17,10 @@ const port = process.env.PORT || 3000;
 app.use(cors());
 app.use(express.json());
 
-// Rutas públicas
+// Rutas públicas o protegidas
 app.use('/api/usuarios', rutasUsuario);
 app.use('/api/login', rutasLogin);
+app.use('/api/reservas', rutasReserva);
 
 // Ruta raíz
 app.get('/', (req, res) => {
